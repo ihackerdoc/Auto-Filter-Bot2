@@ -72,10 +72,10 @@ DATABASE_NAME = environ.get('DATABASE_NAME', "Cluster0")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Files')
 
 # Links
-SUPPORT_LINK = environ.get('SUPPORT_LINK', 'https://t.me/HA_Bots_Support')
+SUPPORT_LINK = environ.get('SUPPORT_LINK', 'https://t.me/MovieTime_Movie_Request_Group')
 OWNER_USERNAME = environ.get("OWNER_USERNAME", "https://t.me/i_hackerdoc")
-UPDATES_LINK = environ.get('UPDATES_LINK', 'https://t.me/dochacks')
-FILMS_LINK = environ.get('FILMS_LINK', 'https://t.me/MovieTime_Movie_Request_Group')
+UPDATES_LINK = environ.get('UPDATES_LINK', 'https://t.me/latest_hindi_movies_hub')
+FILMS_LINK = environ.get('FILMS_LINK', 'https://https://t.me/+bXqembpMsEczZjQ1')
 TUTORIAL = environ.get("TUTORIAL", "https://t.me/dochacks/6")
 VERIFY_TUTORIAL = environ.get("VERIFY_TUTORIAL", "https://t.me/dochacks/6")
 
@@ -87,9 +87,9 @@ LANGUAGES = [language.lower() for language in environ.get('LANGUAGES', 'hindi en
 QUALITY = [quality.lower() for quality in environ.get('QUALITY', '360p 480p 720p 1080p 2160p').split()]
 IMDB_TEMPLATE = environ.get("IMDB_TEMPLATE", script.IMDB_TEMPLATE)
 FILE_CAPTION = environ.get("FILE_CAPTION", script.FILE_CAPTION)
-SHORTLINK_URL = environ.get("SHORTLINK_URL", "omegalinks.in")
-SHORTLINK_API = environ.get("SHORTLINK_API", "60bc640bf344eecaf3982353c4f4e596af952fc7")
-VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 3600)) # Add time in seconds
+SHORTLINK_URL = environ.get("SHORTLINK_URL", "just2earn.com")
+SHORTLINK_API = environ.get("SHORTLINK_API", "b6d056c0bbfae325cbc6c55f3a741507bd92bc54")
+VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 14400)) # Add time in seconds
 WELCOME_TEXT = environ.get("WELCOME_TEXT", script.WELCOME_TEXT)
 INDEX_EXTENSIONS = [extensions.lower() for extensions in environ.get('INDEX_EXTENSIONS', 'mp4 mkv').split()]
 PM_FILE_DELETE_TIME = int(environ.get('PM_FILE_DELETE_TIME', '3600'))
@@ -105,7 +105,7 @@ LINK_MODE = is_enabled("LINK_MODE", False)
 AUTO_FILTER = is_enabled('AUTO_FILTER', True)
 IMDB = is_enabled('IMDB', False)
 SPELL_CHECK = is_enabled("SPELL_CHECK", True)
-SHORTLINK = is_enabled('SHORTLINK', True)
+SHORTLINK = is_enabled('SHORTLINK', False)
 
 #premium info
 PAYMENT_QR = environ.get('PAYMENT_QR', 'https://envs.sh/0bD.jpg')
