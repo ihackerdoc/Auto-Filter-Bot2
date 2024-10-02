@@ -1,16 +1,19 @@
+import random
 import asyncio
 import re
 from time import time as time_now
+import ast
 import math
 from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
 from Script import script
 from datetime import datetime, timedelta
-from info import ADMINS, URL, MAX_BTN, BIN_CHANNEL, IS_STREAM, DELETE_TIME, FILMS_LINK, LOG_CHANNEL, SUPPORT_GROUP, SUPPORT_LINK, UPDATES_LINK, LANGUAGES, PAYMENT_QR, QUALITY, OWNER_UPI_ID, OWNER_USERNAME
+import pyrogram
+from info import ADMINS, URL, MAX_BTN, BIN_CHANNEL, IS_STREAM, DELETE_TIME, FILMS_LINK, IS_VERIFY, VERIFY_EXPIRE, LOG_CHANNEL, SUPPORT_GROUP, SUPPORT_LINK, UPDATES_LINK, PICS, PROTECT_CONTENT, IMDB, AUTO_FILTER, SPELL_CHECK, IMDB_TEMPLATE, AUTO_DELETE, LANGUAGES, PAYMENT_QR, QUALITY, OWNER_UPI_ID, OWNER_USERNAME
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto
 from pyrogram import Client, filters, enums
-from utils import get_size, is_subscribed, is_check_admin, get_wish, get_shortlink, get_readable_time, get_poster, temp, get_settings, save_group_settings
+from utils import get_size, is_subscribed, is_check_admin, get_wish, get_shortlink, get_verify_status, update_verify_status, get_readable_time, get_poster, temp, get_settings, save_group_settings
 from database.users_chats_db import db
-from database.ia_filterdb import Media, get_search_results,delete_files
+from database.ia_filterdb import Media, get_file_details, get_search_results,delete_files
 
 BUTTONS = {}
 CAP = {}
@@ -32,14 +35,14 @@ async def pm_search(client, message):
         if int(total) != 0:
             await message.reply_text(f'<b><i>🤗 ᴛᴏᴛᴀʟ <code>{total}</code> ʀᴇꜱᴜʟᴛꜱ ꜰᴏᴜɴᴅ ɪɴ ᴛʜɪꜱ ɢʀᴏᴜᴘ 👇</i></b>', reply_markup=reply_markup)
         else:
-            await message.reply_text('<b><i>📢 ꜱᴇɴᴅ ᴍᴏᴠɪᴇ ᴏʀ ꜱᴇʀɪᴇꜱ ʀᴇǫᴜᴇꜱᴛ ʜᴇʀᴇ 👇</i></b>', reply_markup=reply_markup)
+            await message.reply_text(f'<b><i>📢 ꜱᴇɴᴅ ᴍᴏᴠɪᴇ ᴏʀ ꜱᴇʀɪᴇꜱ ʀᴇǫᴜᴇꜱᴛ ʜᴇʀᴇ 👇</i></b>', reply_markup=reply_markup)
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def group_search(client, message):
     try:
         client_id = (await client.get_me()).id
         vp = await client.get_chat_member(message.chat.id, client_id)
-        if vp.status not in [enums.ChatMemberStatus.OWNER, enums.ChatMemberStatus.ADMINISTRATOR]:
+        if not vp.status in [enums.ChatMemberStatus.OWNER, enums.ChatMemberStatus.ADMINISTRATOR]:
             return
     except:
         return
@@ -48,10 +51,6 @@ async def group_search(client, message):
         username = f'@{message.chat.username}' if message.chat.username else vp.invite_link
         await client.send_message(LOG_CHANNEL, script.NEW_GROUP_TXT.format(message.chat.title, message.chat.id, username, total))       
         await db.add_chat(message.chat.id, message.chat.title)
-        if message.chat.members_count is not None:
-    total = int(message.chat.members_count)
-else:
-    total = 0  # or handle it in a way suitable for your logic
     chat_id = message.chat.id
     settings = await get_settings(chat_id)
     user_id = message.from_user.id if message and message.from_user else 0
@@ -1051,30 +1050,7 @@ async def auto_filter(client, msg, s, spoll=False):
                 except:
                     pass
     else:
-        # Assuming `cap`, `files_link`, and `del_msg` are the variables forming the message
-new_message_content = cap + files_link + del_msg
-
-# Check if the current message content is different before editing
-if s.text != new_message_content:
-    k = await s.edit_text(
-        new_message_content, 
-        reply_markup=InlineKeyboardMarkup(btn), 
-        disable_web_page_preview=True, 
-        parse_mode=enums.ParseMode.HTML
-    )
-  else:
-    # Log or handle cases where the message content is the same
-    print("Message not modified as content is the same")
-if s.text is None or s.text != new_message_content:
-    k = await s.edit_text(
-        new_message_content, 
-        reply_markup=InlineKeyboardMarkup(btn), 
-        disable_web_page_preview=True, 
-        parse_mode=enums.ParseMode.HTML
-    )
-else:
-    print("Message not modified as content is the same or text is None")
-
+        k = await s.edit_text(cap + files_link + del_msg, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True, parse_mode=enums.ParseMode.HTML)
         if settings["auto_delete"]:
             await asyncio.sleep(DELETE_TIME)
             await k.delete()
@@ -1126,4 +1102,3 @@ async def advantage_spell_chok(message, s):
         await message.delete()
     except:
         pass
-
