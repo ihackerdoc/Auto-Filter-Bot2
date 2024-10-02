@@ -75,7 +75,7 @@ COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Files')
 SUPPORT_LINK = environ.get('SUPPORT_LINK', 'https://t.me/HA_Bots_Support')
 OWNER_USERNAME = environ.get("OWNER_USERNAME", "https://t.me/i_hackerdoc")
 UPDATES_LINK = environ.get('UPDATES_LINK', 'https://t.me/dochacks')
-FILMS_LINK = environ.get('FILMS_LINK', 'https://t.me/latest_hindi_movies_hub')
+FILMS_LINK = environ.get('FILMS_LINK', 'https://t.me/MovieTime_Movie_Request_Group')
 TUTORIAL = environ.get("TUTORIAL", "https://t.me/dochacks/6")
 VERIFY_TUTORIAL = environ.get("VERIFY_TUTORIAL", "https://t.me/dochacks/6")
 
@@ -95,8 +95,8 @@ INDEX_EXTENSIONS = [extensions.lower() for extensions in environ.get('INDEX_EXTE
 PM_FILE_DELETE_TIME = int(environ.get('PM_FILE_DELETE_TIME', '3600'))
 
 # boolean settings
-IS_PM_SEARCH = is_enabled('IS_PM_SEARCH', False)
-IS_VERIFY = is_enabled('IS_VERIFY', False)
+IS_PM_SEARCH = is_enabled('IS_PM_SEARCH', True)
+IS_VERIFY = is_enabled('IS_VERIFY', True)
 AUTO_DELETE = is_enabled('AUTO_DELETE', True)
 WELCOME = is_enabled('WELCOME', False)
 PROTECT_CONTENT = is_enabled('PROTECT_CONTENT', False)
