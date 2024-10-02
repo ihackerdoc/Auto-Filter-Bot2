@@ -1047,7 +1047,30 @@ async def auto_filter(client, msg, s, spoll=False):
                 except:
                     pass
     else:
-        k = await s.edit_text(cap + files_link + del_msg, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True, parse_mode=enums.ParseMode.HTML)
+        # Assuming `cap`, `files_link`, and `del_msg` are the variables forming the message
+new_message_content = cap + files_link + del_msg
+
+# Check if the current message content is different before editing
+if s.text != new_message_content:
+    k = await s.edit_text(
+        new_message_content, 
+        reply_markup=InlineKeyboardMarkup(btn), 
+        disable_web_page_preview=True, 
+        parse_mode=enums.ParseMode.HTML
+    )
+  else:
+    # Log or handle cases where the message content is the same
+    print("Message not modified as content is the same")
+if s.text is None or s.text != new_message_content:
+    k = await s.edit_text(
+        new_message_content, 
+        reply_markup=InlineKeyboardMarkup(btn), 
+        disable_web_page_preview=True, 
+        parse_mode=enums.ParseMode.HTML
+    )
+else:
+    print("Message not modified as content is the same or text is None")
+
         if settings["auto_delete"]:
             await asyncio.sleep(DELETE_TIME)
             await k.delete()
